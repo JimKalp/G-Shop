@@ -2,4 +2,4 @@
 Project for WWW implemented in MERN stack
 
 
-Author: Dimitris Kalpiris
+Author: Dimitris Kalpiris, Nikos Koutsovasilis
