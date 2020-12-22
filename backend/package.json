@@ -1,0 +1,14 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "rest api for g-shop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dimitris Kalpiris",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
