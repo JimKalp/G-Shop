@@ -57,6 +57,8 @@ passport.use(new jwtStrategy({
   }
 }))
 
+const port = 8080
+const host = '0.0.0.0'
 
 app.use(loginRouter)
 
@@ -70,6 +72,6 @@ app.post("/", (req, res) => {
     res.send("BLA")
 })
 
-app.listen(port, () => {
+app.listen(port, host, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
