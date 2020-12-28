@@ -22,6 +22,46 @@ connection.once('open', () => {
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 
+// Authentication
+const passport = require('passport')
+const passportLocal = require('passport-local')
+const passportJWT = require('passport-jwt')
+const loginRouter = require('./routes/login');
+
+jwtStrategy = passportJWT.Strategy
+
+const app = express()
+
+app.use(passport.initialize())
+
+passport.use(new passportLocal({
+  usernameField: "email"
+}, (email, password, done) => {
+  if(email === user.email && password === user.password) {
+    return done(null, user)
+  }else {
+    return done(null, false)
+  }
+}))
+
+passport.use(new jwtStrategy({
+  jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: "jwt_secret"
+}, (jwt_payload, done) => {
+  if(user.id === jwt_payload.user._id){
+    return done(null, user)
+  } else {
+    return done(null, false, {
+      message: "Token not matched"
+    })
+  }
+}))
+
+const port = 8080
+const host = '0.0.0.0'
+
+app.use(loginRouter)
+
 app.get('/products', (req, res) => {
   const prod  = {name: "bla", price: "45"}
   res.send(prod)
@@ -32,6 +72,6 @@ app.post("/", (req, res) => {
     res.send("BLA")
 })
 
-app.listen(port, () => {
+app.listen(port, host, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })

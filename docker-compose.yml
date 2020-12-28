@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  app:
+    build: ./backend/
+    ports:
+      - "8080:8080"
+  
+  ui:
+    build: ./ui/
+    ports:
+      - "3000:3000"
