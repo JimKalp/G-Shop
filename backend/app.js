@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
-const app = express()
-const port = 3000
+const app = express();
+const port = 3000;
 
 //app.use(cors());
 //app.use(express.json());
@@ -16,6 +16,9 @@ const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
+
+//app.use('/users', usersRouter);
+//app.use('/products, productsRouter);
 
 app.get('/products', (req, res) => {
   const prod  = {name: "bla", price: "45"}
