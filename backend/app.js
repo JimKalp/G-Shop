@@ -1,14 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const usersRouter = require('./routes/users')
+const productsRouter = require('./routes/products')
 
 require('dotenv').config();
 
 const app = express();
 const port = 3000;
 
-//app.use(cors());
-//app.use(express.json());
+app.use(cors());
+app.use(express.json());
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
@@ -17,8 +19,8 @@ connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
 
-//app.use('/users', usersRouter);
-//app.use('/products, productsRouter);
+app.use('/users', usersRouter);
+app.use('/products', productsRouter);
 
 app.get('/products', (req, res) => {
   const prod  = {name: "bla", price: "45"}
