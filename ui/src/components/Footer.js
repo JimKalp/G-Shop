@@ -1,15 +1,15 @@
-import React from 'react';
-import '../App.css';
+import React from "react";
+import "../App.css";
 
 function Footer() {
   return (
-    <div className="main-footer">
-        <div>
-          <p>
-            &copy;{new Date().getFullYear()} G-Shop | All rights reserved |
-            Terms Of Service | Privacy
-          </p>
-        </div>
+    <div className="footer">
+      <div>
+        <p>
+          &copy;{new Date().getFullYear()} G-Shop | All rights reserved | Terms
+          Of Service | Privacy
+        </p>
+      </div>
     </div>
   );
 }
