@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Navbar from "./components/navbar.component";
 import CreateUser from "./components/create-user.component";
+import Login from "./components/Login";
 
 const products = [
   {
