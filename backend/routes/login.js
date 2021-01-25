@@ -9,7 +9,7 @@ router.post("/login", (req, res, next) => {
         return next(err)
       }
       if(!user){
-        return res.send("Wrong email or password")
+        return res.send("Wrong username or password")
       }
       req.login(user, () => {
         const body = {_id: user.id, email: user.email }
@@ -23,7 +23,7 @@ router.post("/login", (req, res, next) => {
 router.get("/secret", passport.authenticate("jwt", { session: false }), (req, res) => {
     if(!req.user){
       res.json({
-        username: "nobody"
+        username: "guest"
       })
     } else {
       res.json(req.user)
