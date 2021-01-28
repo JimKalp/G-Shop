@@ -9,19 +9,17 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
+.row{
+  display: flex;
+  flex-wrap: wrap;
+}
 
-/*img {
-  flex: 1;
-  width: undefined;
-  height: undefined;
-  resizeMode: 'contain';
-}*/
 .main-footer {
   color: white;
   background-color: rgb(17, 17, 17);
   text-align: center;
-  padding-top: 2em;
-  padding-bottom: 2em;
+  padding-top: 30px;
+  padding-bottom: 30px;
   position: relative;
   bottom: 0;
   width: 100%;
@@ -38,12 +36,12 @@ body {
   border-radius: 5px;
 }
 
-.header {
+/*.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-}
+}*/
 
 .btn {
   display: inline-block;

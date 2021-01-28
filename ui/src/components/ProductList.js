@@ -17,8 +17,9 @@ const ProductList = ({ products, location }) => {
   useEffect(() => {
     setProducts(p);
   }, [setProducts, p]);
+
   return (
-    <div>
+    <div className="row">
       {_products.map((product) => {
         return <Product key={product._id} product={product} />;
       })}
