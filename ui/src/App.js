@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import AddProduct from "./components/AddProduct";
 import { UserContext } from "./context/user_context";
+import Footer from "./components/Footer";
 axios.defaults.baseURL = "http://localhost:8080";
 
 function usePersistedState(key, defaultValue) {
@@ -75,6 +76,7 @@ function App() {
             render={(props) => <ProductList {...props} products={products} />}
           />
         </div>
+        <Footer />
       </UserContext.Provider>
     </Router>
   );
