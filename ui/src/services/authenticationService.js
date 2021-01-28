@@ -1,9 +1,11 @@
 import axios from "axios";
 
+axios.defaults.baseURL = "http://localhost:8080";
+
 class AuthenticationService {
   signin = async (username, password) => {
     try {
-      const response = await axios.post("http://localhost:8080/login", {
+      const response = await axios.post("/login", {
         username,
         password,
       });
@@ -22,7 +24,7 @@ class AuthenticationService {
   }
 
   register = async (username, email, password) => {
-    const res = await axios.post("http://localhost:8080/users/add", {
+    const res = await axios.post("/users/add", {
       username,
       email,
       password,
