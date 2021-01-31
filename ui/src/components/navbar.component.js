@@ -32,6 +32,7 @@ class Navbar extends Component {
     this.state = {
       username: "",
       isAuthenticated: false,
+      search: "",
     };
     axios.get("/secret").then((data) => {
       this.setState({ username: data.data.username, isAuthenticated: true });
@@ -72,34 +73,48 @@ class Navbar extends Component {
                 </Link>
               </li>
             </ul>
-            <ul className="navbar-nav">
-              {!auth && (
-                <li className="nav-item">
-                  <div className="btn-nav">
-                    <Link
-                      to="/login"
-                      className="btn btn-info btn-sm navbar-btn"
-                    >
-                      Log In
-                    </Link>
-                  </div>
-                </li>
-              )}
-              {auth && (
-                <li className="navbar-item navbar-right">
-                  <Link to="/login" className="nav-link">
-                    Logged in as: {name}
-                  </Link>
-                </li>
-              )}
-              {auth && (
-                <li className="navbar-item">
-                  <LogoutButton onClick={this.signout} />
-                </li>
-              )}
-            </ul>
+            <form className="form-inline">
+              <input
+                className="form-control mr-sm-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                onChange={(event) =>
+                  this.setState({ search: event.target.value })
+                }
+              />
+              <Link
+                to={{ pathname: "/", state: { filter: this.state.search } }}
+                className="btn btn-outline-success my-2 my-sm-0"
+              >
+                Search
+              </Link>
+            </form>
           </div>
         </div>
+        <ul className="navbar-nav">
+          {!auth && (
+            <li className="nav-item">
+              <div className="btn-nav">
+                <Link to="/login" className="btn btn-info btn-sm navbar-btn">
+                  Log In
+                </Link>
+              </div>
+            </li>
+          )}
+          {auth && (
+            <li className="navbar-item navbar-right">
+              <Link to="/login" className="nav-link">
+                Logged in as: {name}
+              </Link>
+            </li>
+          )}
+          {auth && (
+            <li className="navbar-item">
+              <LogoutButton onClick={this.signout} />
+            </li>
+          )}
+        </ul>
       </nav>
     );
   }
