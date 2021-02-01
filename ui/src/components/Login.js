@@ -14,8 +14,7 @@ const Login = () => {
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              AuthenticationService.signin(username, password);
-              state.login(username);
+              AuthenticationService.signin(username, password, state.login);
               history.push("/");
             }}
           >

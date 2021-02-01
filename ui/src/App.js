@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navbar from "./components/navbar.component";
 import CreateUser from "./components/create-user.component";
 import Login from "./components/Login";
+import Signup from "./components/Signup";
 import { UserContext } from "./context/user_context";
 
 const products = [
@@ -54,6 +55,7 @@ function App() {
           <br />
           <Route path="/user" component={CreateUser} />
           <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
           <Route
             exact
             path="/"

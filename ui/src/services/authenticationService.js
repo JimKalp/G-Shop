@@ -3,7 +3,7 @@ import axios from "axios";
 axios.defaults.baseURL = "http://localhost:8080";
 
 class AuthenticationService {
-  signin = async (username, password) => {
+  signin = async (username, password, setUserState) => {
     try {
       const response = await axios.post("/login", {
         username,
@@ -11,6 +11,7 @@ class AuthenticationService {
       });
       if (response.data.token) {
         localStorage.setItem("user", JSON.stringify(response.data));
+        setUserState(username);
       }
       return response.data;
     } catch (err) {

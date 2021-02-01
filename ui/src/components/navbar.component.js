@@ -94,13 +94,25 @@ class Navbar extends Component {
         </div>
         <ul className="navbar-nav">
           {!auth && (
-            <li className="nav-item">
+            <>
               <div className="btn-nav">
-                <Link to="/login" className="btn btn-info btn-sm navbar-btn">
-                  Log In
-                </Link>
+                <li className="nav-item">
+                  <Link to="/login" className="btn btn-light btn-sm navbar-btn">
+                    Log In
+                  </Link>
+                </li>
               </div>
-            </li>
+              <li className="nav-item">
+                <div className="btn-nav">
+                  <Link
+                    to="/signup"
+                    className="btn btn-success btn-sm navbar-btn"
+                  >
+                    Sign up
+                  </Link>
+                </div>
+              </li>
+            </>
           )}
           {auth && (
             <li className="navbar-item navbar-right">
