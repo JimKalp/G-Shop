@@ -11,7 +11,7 @@ class AuthenticationService {
       });
       if (response.data.token) {
         localStorage.setItem("user", JSON.stringify(response.data));
-        setUserState(username);
+        setUserState(username, response.data.role);
       }
       return response.data;
     } catch (err) {

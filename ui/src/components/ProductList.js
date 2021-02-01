@@ -3,7 +3,6 @@ import Product from "./Product";
 
 const ProductList = ({ products, location }) => {
   const [_products, setProducts] = useState([]);
-  console.log(location, _products);
   const _filter = location?.state?.filter;
   let p = [];
   if (_filter) {

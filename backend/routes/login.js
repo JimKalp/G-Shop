@@ -13,9 +13,10 @@ router.post("/login", (req, res, next) => {
     }
     req.login(user, () => {
       const body = { _id: user.id, email: user.email };
+      const role = user.role;
 
       const token = jwt.sign({ user: body }, "jwt_secret");
-      return res.json({ token });
+      return res.json({ token, role });
     });
   })(req, res, next);
 });

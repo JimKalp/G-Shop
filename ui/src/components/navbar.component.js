@@ -34,9 +34,12 @@ class Navbar extends Component {
       isAuthenticated: false,
       search: "",
     };
-    axios.get("/secret").then((data) => {
-      this.setState({ username: data.data.username, isAuthenticated: true });
-    });
+    axios
+      .get("/secret")
+      .then((data) => {
+        this.setState({ username: data.data.username, isAuthenticated: true });
+      })
+      .catch((err) => {});
   }
 
   signout = () => {
@@ -49,6 +52,8 @@ class Navbar extends Component {
   render() {
     let name = this.context.username;
     let auth = this.context.isAuthenticated;
+    let role = this.context.role;
+    console.log(role);
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
         <Link to="/" className="navbar-brand">
@@ -72,6 +77,20 @@ class Navbar extends Component {
                   Create User
                 </Link>
               </li>
+              {role == "admin" && (
+                <li className="navbar-item">
+                  <Link to="/user" className="nav-link">
+                    Admin Page
+                  </Link>
+                </li>
+              )}
+              {role == "user" && (
+                <li className="navbar-item">
+                  <Link to="/user" className="nav-link">
+                    User Page
+                  </Link>
+                </li>
+              )}
             </ul>
             <form className="form-inline">
               <input
