@@ -3,32 +3,17 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
+import axios from "axios";
+
 import Navbar from "./components/navbar.component";
 import CreateUser from "./components/create-user.component";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import AddProduct from "./components/AddProduct";
+import ProductService from "./services/productService";
 import { UserContext } from "./context/user_context";
-
-const products = [
-  {
-    id: 1,
-    description: "Gadget",
-    price: 12.99,
-    category: "tech",
-  },
-  {
-    id: 2,
-    description: "Gadget",
-    price: 19.99,
-    category: "tech",
-  },
-  {
-    id: 3,
-    description: "Laptop",
-    price: 192.99,
-    category: "tech",
-  },
-];
+axios.defaults.baseURL = "http://localhost:8080";
+let products = [];
 
 function usePersistedState(key, defaultValue) {
   const [state, setState] = useState(
@@ -43,6 +28,7 @@ function usePersistedState(key, defaultValue) {
 function App() {
   const [username, setUsername] = usePersistedState("username", "Guest"); // useState("Guest");
   const [role, setRole] = usePersistedState("role", "guest");
+  const [products, setProducts] = usePersistedState("products", []);
   const [isAuthenticated, setIsAuthenticated] = usePersistedState(
     "auth",
     false
@@ -54,6 +40,7 @@ function App() {
   };
   const logout = () => {
     setUsername("Guest");
+    setRole("guest");
     setIsAuthenticated(false);
   };
   const state = {
@@ -63,6 +50,20 @@ function App() {
     login,
     logout,
   };
+  const fetchProducts = async () => {
+    const res = await axios.get("/products");
+    console.log(res);
+    return res.data;
+  };
+  useEffect(() => {
+    const getProducts = async () => {
+      const prods = await fetchProducts();
+      setProducts(prods);
+    };
+
+    getProducts();
+  }, []);
+
   return (
     <Router>
       <UserContext.Provider value={state}>
@@ -72,6 +73,7 @@ function App() {
           <Route path="/user" component={CreateUser} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/addProducts" component={AddProduct} />
           <Route
             exact
             path="/"

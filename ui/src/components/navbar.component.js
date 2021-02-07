@@ -79,8 +79,8 @@ class Navbar extends Component {
               </li>
               {role == "admin" && (
                 <li className="navbar-item">
-                  <Link to="/user" className="nav-link">
-                    Admin Page
+                  <Link to="/addProducts" className="nav-link">
+                    Add Products
                   </Link>
                 </li>
               )}
