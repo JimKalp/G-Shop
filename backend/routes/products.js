@@ -1,5 +1,18 @@
 const router = require("express").Router();
 let Product = require("../models/products.model");
+var multer = require("multer");
+var fs = require("fs");
+
+var storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + "-" + Date.now());
+  },
+});
+
+var upload = multer({ storage: storage });
 
 router.route("/").get((req, res) => {
   Product.find()
@@ -7,7 +20,7 @@ router.route("/").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/add").post((req, res) => {
+router.route("/add").post(upload.single("uploaded_file"), (req, res, next) => {
   const description = req.body.description;
   const price = Number(req.body.price);
   const category = req.body.category;
@@ -17,6 +30,10 @@ router.route("/add").post((req, res) => {
     description,
     price,
     category,
+    img: {
+      data: fs.readFileSync(req.file.path),
+      contentType: "image/jpeg",
+    },
   });
 
   newProduct

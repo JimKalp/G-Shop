@@ -15,18 +15,10 @@ const Signup = () => {
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              let res = AuthenticationService.register(
-                username,
-                email,
-                password
-              )
+              AuthenticationService.register(username, email, password)
                 .then((resp) => {
                   console.log(resp);
-                  let data = AuthenticationService.signin(
-                    username,
-                    password,
-                    state.login
-                  );
+                  AuthenticationService.signin(username, password, state.login);
                   history.push("/");
                 })
                 .catch((err) => console.error(err));

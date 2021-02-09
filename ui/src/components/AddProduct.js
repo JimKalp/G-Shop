@@ -1,26 +1,21 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { UserContext } from "../context/user_context";
-// import productService from "../services/productService";
 import ProductService from "../services/productService";
 
 const AddProduct = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const history = useHistory();
+  const [file, setFile] = useState();
+
   return (
     <UserContext.Consumer>
       {(state) => (
         <div>
           <form
             onSubmit={async (event) => {
-              console.log("ok");
-              const res = await ProductService.add(
-                price,
-                description,
-                category
-              );
+              event.preventDefault();
+              await ProductService.add(price, description, category, file);
             }}
           >
             <div>
@@ -51,6 +46,13 @@ const AddProduct = () => {
                 onChange={(event) => {
                   setCategory(event.target.value);
                 }}
+              />
+            </div>
+            <div>
+              <input
+                type="file"
+                name="uploaded_file"
+                onChange={(event) => setFile(event.target.files[0])}
               />
             </div>
             <div>

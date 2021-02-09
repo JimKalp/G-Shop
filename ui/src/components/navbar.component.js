@@ -34,6 +34,9 @@ class Navbar extends Component {
       isAuthenticated: false,
       search: "",
     };
+  }
+
+  componentDidMoun() {
     axios
       .get("/secret")
       .then((data) => {
@@ -77,14 +80,14 @@ class Navbar extends Component {
                   Create User
                 </Link>
               </li>
-              {role == "admin" && (
+              {role === "admin" && (
                 <li className="navbar-item">
                   <Link to="/addProducts" className="nav-link">
                     Add Products
                   </Link>
                 </li>
               )}
-              {role == "user" && (
+              {role === "user" && (
                 <li className="navbar-item">
                   <Link to="/user" className="nav-link">
                     User Page

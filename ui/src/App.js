@@ -2,18 +2,14 @@ import ProductList from "./components/ProductList";
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
 import axios from "axios";
-
 import Navbar from "./components/navbar.component";
 import CreateUser from "./components/create-user.component";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import AddProduct from "./components/AddProduct";
-import ProductService from "./services/productService";
 import { UserContext } from "./context/user_context";
 axios.defaults.baseURL = "http://localhost:8080";
-let products = [];
 
 function usePersistedState(key, defaultValue) {
   const [state, setState] = useState(
@@ -62,7 +58,7 @@ function App() {
     };
 
     getProducts();
-  }, []);
+  }, [setProducts]);
 
   return (
     <Router>
@@ -80,7 +76,6 @@ function App() {
             render={(props) => <ProductList {...props} products={products} />}
           />
         </div>
-        {/* <ProductList products={products} /> */}
       </UserContext.Provider>
     </Router>
   );
