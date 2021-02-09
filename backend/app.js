@@ -77,17 +77,6 @@ const port = 8080;
 const host = "0.0.0.0";
 
 app.use(loginRouter);
-
-app.get("/products", (req, res) => {
-  const prod = { name: "bla", price: "45" };
-  res.send(prod);
-});
-
-app.post("/", (req, res) => {
-  console.log(req);
-  res.send("BLA");
-});
-
 app.listen(port, host, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

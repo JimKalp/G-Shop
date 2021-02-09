@@ -48,7 +48,6 @@ function App() {
   };
   const fetchProducts = async () => {
     const res = await axios.get("/products");
-    console.log(res);
     return res.data;
   };
   useEffect(() => {

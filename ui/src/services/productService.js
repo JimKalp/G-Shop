@@ -25,7 +25,6 @@ class ProductService {
   get = async (f) => {
     try {
       const res = await axios.get("/products");
-      console.log(res.data);
       f(res.data);
       return res.data;
     } catch (error) {}

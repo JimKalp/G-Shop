@@ -17,7 +17,6 @@ const Signup = () => {
               event.preventDefault();
               AuthenticationService.register(username, email, password)
                 .then((resp) => {
-                  console.log(resp);
                   AuthenticationService.signin(username, password, state.login);
                   history.push("/");
                 })

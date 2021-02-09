@@ -56,7 +56,6 @@ class Navbar extends Component {
     let name = this.context.username;
     let auth = this.context.isAuthenticated;
     let role = this.context.role;
-    console.log(role);
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
         <Link to="/" className="navbar-brand">
