@@ -35,6 +35,9 @@ function App() {
     setIsAuthenticated(true);
     setRole(_role);
   };
+  const addProducts = (product) => {
+    setProducts([...products, product]);
+  };
   const logout = () => {
     setUsername("Guest");
     setRole("guest");
@@ -69,7 +72,12 @@ function App() {
           <Route path="/user" component={CreateUser} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route path="/addProducts" component={AddProduct} />
+          <Route
+            path="/addProducts"
+            render={(props) => (
+              <AddProduct {...props} addProducts={addProducts} />
+            )}
+          />
           <Route
             exact
             path="/"

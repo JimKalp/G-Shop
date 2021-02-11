@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { UserContext } from "../context/user_context";
 import ProductService from "../services/productService";
+import { useHistory } from "react-router-dom";
 
-const AddProduct = () => {
+const AddProduct = ({ addProducts }) => {
+  let history = useHistory();
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -15,7 +17,15 @@ const AddProduct = () => {
           <form
             onSubmit={async (event) => {
               event.preventDefault();
-              await ProductService.add(price, description, category, file);
+              const res = await ProductService.add(
+                price,
+                description,
+                category,
+                file
+              );
+              console.log(addProducts);
+              addProducts(res);
+              history.push("/");
             }}
           >
             <div>

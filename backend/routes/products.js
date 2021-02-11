@@ -39,7 +39,7 @@ router.route("/add").post(upload.single("uploaded_file"), (req, res, next) => {
   newProduct
     .save()
     .then(() => {
-      res.json("Product added!");
+      res.json(newProduct);
     })
     .catch((err) => {
       console.log(err);
