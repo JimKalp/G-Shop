@@ -8,7 +8,7 @@ const productsSchema = new Schema(
     category: { type: String, required: true },
     description: { type: String, required: true },
     img: {
-      data: Buffer,
+      url: String,
       contentType: String,
     },
   },

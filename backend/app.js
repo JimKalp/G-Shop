@@ -8,7 +8,10 @@ const User = require("./models/user.model");
 require("dotenv").config();
 
 const app = express();
+const host = process.env.HOST;
+const port = process.env.PORT;
 
+app.use("/uploads", express.static("uploads"));
 app.use(cors());
 app.use(express.json());
 
@@ -72,9 +75,6 @@ passport.use(
     }
   )
 );
-
-const port = 8080;
-const host = "0.0.0.0";
 
 app.use(loginRouter);
 app.listen(port, host, () => {

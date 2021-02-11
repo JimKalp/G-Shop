@@ -1,8 +1,6 @@
-const router = require("express").Router();
-let Product = require("../models/products.model");
+require("dotenv").config();
+var Product = require("../models/products.model");
 var multer = require("multer");
-var fs = require("fs");
-
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
@@ -11,8 +9,10 @@ var storage = multer.diskStorage({
     cb(null, file.fieldname + "-" + Date.now());
   },
 });
-
 var upload = multer({ storage: storage });
+
+const host_URL = process.env.HOST_URL;
+const router = require("express").Router();
 
 router.route("/").get((req, res) => {
   Product.find()
@@ -24,14 +24,13 @@ router.route("/add").post(upload.single("uploaded_file"), (req, res, next) => {
   const description = req.body.description;
   const price = Number(req.body.price);
   const category = req.body.category;
-
   const newProduct = new Product({
     id: price + 1,
     description,
     price,
     category,
     img: {
-      data: fs.readFileSync(req.file.path),
+      url: host_URL + "/" + req.file.path,
       contentType: "image/jpeg",
     },
   });
