@@ -49,6 +49,7 @@ function App() {
     isAuthenticated,
     login,
     logout,
+    cart: {},
   };
   const fetchProducts = async () => {
     const res = await axios.get("/products");
