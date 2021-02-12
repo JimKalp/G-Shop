@@ -57,16 +57,21 @@ router.route("/:id").delete((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/update/:id").post((req, res) => {
+router.route("/update/:id").put((req, res) => {
   Product.findById(req.params.id)
     .then((product) => {
       product.id = req.body.id;
-      product.price = Number(req.body.duration);
+      product.price = Number(req.body.price);
       product.category = req.body.category;
+      product.description = req.body.description;
+
+      if (req.body.file) {
+        product.img.url = req.body.file;
+      }
 
       product
         .save()
-        .then(() => res.json("Products updated!"))
+        .then(() => res.json(product))
         .catch((err) => res.status(400).json("Error: " + err));
     })
     .catch((err) => res.status(400).json("Error: " + err));

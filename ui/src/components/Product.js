@@ -1,6 +1,11 @@
 import React from "react";
+import ProductService from "../services/productService";
+import contextWrapper from "../context/contextWrapper";
+import { Link } from "react-router-dom";
 
-const Product = ({ product }) => {
+const Product = (props) => {
+  const product = props.product;
+
   return (
     <div className="card-body card-container" style={{ display: "grid" }}>
       <img
@@ -13,9 +18,29 @@ const Product = ({ product }) => {
       <p>{product.category}</p>
       <div>
         <button className="btn btn-primary">Add to Cart</button>
+        {props.context.role === "admin" && (
+          <>
+            <Link to={`/edit/${product._id}`}>
+              <button className="btn btn-success">Edit</button>
+            </Link>
+            <button
+              className="btn btn-danger"
+              onClick={async () => {
+                await ProductService.delete(product._id);
+                props.context.setProducts(
+                  props.context.products.filter((p) => {
+                    return p._id !== product._id;
+                  })
+                );
+              }}
+            >
+              Delete
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
 };
 
-export default Product;
+export default contextWrapper(Product);

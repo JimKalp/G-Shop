@@ -29,6 +29,24 @@ class ProductService {
       return res.data;
     } catch (error) {}
   };
+
+  delete = async (id) => {
+    try {
+      const res = await axios.delete(`/products/${id}`);
+      return res;
+    } catch (err) {
+      return { error: "Cannot delete" };
+    }
+  };
+
+  update = async (product) => {
+    try {
+      const res = await axios.put(`/products/update/${product._id}`, product);
+      return res;
+    } catch (err) {
+      return { error: "Cannot update" };
+    }
+  };
 }
 
 export default new ProductService();

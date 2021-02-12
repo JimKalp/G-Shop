@@ -8,6 +8,7 @@ import CreateUser from "./components/create-user.component";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import AddProduct from "./components/AddProduct";
+import EditProduct from "./components/EditProduct";
 import { UserContext } from "./context/user_context";
 import Footer from "./components/Footer";
 axios.defaults.baseURL = "http://localhost:8080";
@@ -49,6 +50,8 @@ function App() {
     isAuthenticated,
     login,
     logout,
+    setProducts,
+    products,
     cart: {},
   };
   const fetchProducts = async () => {
@@ -73,6 +76,10 @@ function App() {
           <Route path="/user" component={CreateUser} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route
+            path="/edit/:id"
+            render={(props) => <EditProduct {...props} />}
+          />
           <Route
             path="/addProducts"
             render={(props) => (
