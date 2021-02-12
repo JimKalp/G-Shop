@@ -4,6 +4,7 @@ import AuthenticationService from "../services/authenticationService";
 import { UserContext } from "../context/user_context";
 
 const Signup = () => {
+  const [error, setError] = useState();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -13,14 +14,20 @@ const Signup = () => {
       {(state) => (
         <div>
           <form
-            onSubmit={(event) => {
+            onSubmit={async (event) => {
               event.preventDefault();
-              AuthenticationService.register(username, email, password)
-                .then((resp) => {
-                  AuthenticationService.signin(username, password, state.login);
-                  history.push("/");
-                })
-                .catch((err) => console.error(err));
+              const res = await AuthenticationService.register(
+                username,
+                email,
+                password
+              );
+              console.log(res);
+              if (res.error) {
+                setError(res.error);
+              } else {
+                AuthenticationService.signin(username, password, state.login);
+                history.push("/");
+              }
             }}
           >
             <div>
@@ -56,6 +63,9 @@ const Signup = () => {
             <div>
               <input type="submit" value="Sign up" />
             </div>
+            {error && (
+              <p className="alert alert-danger">Username or email exists</p>
+            )}
           </form>
         </div>
       )}

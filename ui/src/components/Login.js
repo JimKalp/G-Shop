@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 
 const Login = () => {
   let history = useHistory();
+  const [error, setError] = useState();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   return (
@@ -12,10 +13,18 @@ const Login = () => {
       {(state) => (
         <div>
           <form
-            onSubmit={(event) => {
+            onSubmit={async (event) => {
               event.preventDefault();
-              AuthenticationService.signin(username, password, state.login);
-              history.push("/");
+              const res = await AuthenticationService.signin(
+                username,
+                password,
+                state.login
+              );
+              if (res.error) {
+                setError(res.error);
+              } else {
+                history.push("/");
+              }
             }}
           >
             <div>
@@ -41,7 +50,12 @@ const Login = () => {
             <div>
               <input type="submit" value="Log In" />
             </div>
-          </form>
+            {error && (
+              <p className="alert alert-danger" role="alert">
+                Wrong username or password
+              </p>
+            )}
+          </form>{" "}
         </div>
       )}
     </UserContext.Consumer>

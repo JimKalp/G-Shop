@@ -9,7 +9,7 @@ router.post("/login", (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      return res.send("Wrong username or password");
+      return res.status(400).json({ msg: "wrong.credentials" });
     }
     req.login(user, () => {
       const body = { _id: user.id, email: user.email };

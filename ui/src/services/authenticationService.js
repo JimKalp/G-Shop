@@ -13,10 +13,9 @@ class AuthenticationService {
         localStorage.setItem("user", JSON.stringify(response.data));
         setUserState(username, response.data.role);
       }
-      return response.data;
+      return response;
     } catch (err) {
-      console.log(err);
-      throw err;
+      return { error: "Unauthorized" };
     }
   };
 
@@ -25,12 +24,16 @@ class AuthenticationService {
   }
 
   register = async (username, email, password) => {
-    const res = await axios.post("/users/add", {
-      username,
-      email,
-      password,
-    });
-    return res;
+    try {
+      const res = await axios.post("/users/add", {
+        username,
+        email,
+        password,
+      });
+      return res;
+    } catch (err) {
+      return { error: "Username or email exists" };
+    }
   };
 
   getCurrentUser() {
