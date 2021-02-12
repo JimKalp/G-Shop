@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:12 as build
 
 # Create app directory
 WORKDIR /usr/src/ui
@@ -16,4 +16,9 @@ RUN npm install
 COPY . .
 
 EXPOSE 3000
-CMD [ "npm", "start" ]
+RUN npm run build
+# CMD [ "npm", "start" ]
+
+FROM nginx
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /usr/src/ui/build /usr/share/nginx/html
