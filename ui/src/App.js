@@ -52,6 +52,9 @@ function App() {
     login,
     logout,
     cart: {},
+    removeFromCart: this.removeFromCart,
+    addToCart: this.addToCart,
+    clearCart: this.clearCart,
   };
   const fetchProducts = async () => {
     const res = await axios.get("/products");
