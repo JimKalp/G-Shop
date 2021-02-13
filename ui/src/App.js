@@ -10,6 +10,7 @@ import Signup from "./components/Signup";
 import AddProduct from "./components/AddProduct";
 import { UserContext } from "./context/user_context";
 import Footer from "./components/Footer";
+import Cart from './components/Cart';
 axios.defaults.baseURL = "http://localhost:8080";
 
 function usePersistedState(key, defaultValue) {
@@ -26,6 +27,7 @@ function App() {
   const [username, setUsername] = usePersistedState("username", "Guest"); // useState("Guest");
   const [role, setRole] = usePersistedState("role", "guest");
   const [products, setProducts] = usePersistedState("products", []);
+  const [cart, setCart] = usePersistedState("cart", {});
   const [isAuthenticated, setIsAuthenticated] = usePersistedState(
     "auth",
     false
@@ -60,9 +62,14 @@ function App() {
       const prods = await fetchProducts();
       setProducts(prods);
     };
-
+    
     getProducts();
-  }, [setProducts]);
+
+    let cart = localStorage.getItem("cart");
+    cart = cart? JSON.parse(cart) : {};
+    
+  }, [setProducts], [setCart]);
+
 
   return (
     <Router>
@@ -73,6 +80,7 @@ function App() {
           <Route path="/user" component={CreateUser} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/MyCart" component={Cart} />
           <Route
             path="/addProducts"
             render={(props) => (

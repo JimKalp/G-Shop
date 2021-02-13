@@ -70,8 +70,8 @@ class Navbar extends Component {
                 </Link>
               </li>
               <li className="navbar-item">
-                <Link to="/categories" className="nav-link">
-                  Categories
+                <Link to="/Cart" className="nav-link">
+                  My Cart
                 </Link>
               </li>
               <li className="navbar-item">
