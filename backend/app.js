@@ -10,17 +10,18 @@ require("dotenv").config();
 const app = express();
 const host = process.env.HOST;
 const port = process.env.PORT;
+const uri = process.env.ATLAS_URI;
 
 app.use("/uploads", express.static("uploads"));
 app.use(cors());
 app.use(express.json());
 
-const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
 });
+
 const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
@@ -63,7 +64,10 @@ passport.use(
       secretOrKey: "jwt_secret",
     },
     (jwt_payload, done) => {
-      User.findOne({ id: jwt_payload.sub }, function (err, user) {
+      User.findById(jwt_payload.user._id, function (err, user) {
+        if (err) {
+          console.error(err);
+        }
         if (user) {
           return done(null, user);
         } else {

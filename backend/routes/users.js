@@ -1,11 +1,28 @@
 const router = require("express").Router();
 let User = require("../models/user.model");
+const passport = require("passport");
+const amw = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (user.role !== "admin") {
+        console.log("not admin");
+        console.log(req.user);
+        res.status(401).json({ error: "Unauthorized" });
+      }
+    })
+    .catch((err) => {
+      res.status(401).json({ error: "Unauthorized" });
+    });
+  next();
+};
 
-router.route("/").get((req, res) => {
-  User.find()
-    .then((users) => res.json(users))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
+router
+  .route("/")
+  .get(passport.authenticate("jwt", { session: false }), amw, (req, res) => {
+    User.find()
+      .then((users) => res.json(users))
+      .catch((err) => res.status(400).json("Error: " + err));
+  });
 
 router.route("/add").post((req, res) => {
   const username = req.body.username;

@@ -12,7 +12,7 @@ router.post("/login", (req, res, next) => {
       return res.status(400).json({ msg: "wrong.credentials" });
     }
     req.login(user, () => {
-      const body = { _id: user.id, email: user.email };
+      const body = { _id: user._id, email: user.email };
       const role = user.role;
 
       const token = jwt.sign({ user: body }, "jwt_secret");

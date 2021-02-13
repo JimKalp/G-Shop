@@ -31,7 +31,6 @@ const EditProduct = (props) => {
         onSubmit={async (event) => {
           event.preventDefault();
           const res = await ProductService.update({
-            id: product.id,
             _id: product._id,
             price,
             description,
