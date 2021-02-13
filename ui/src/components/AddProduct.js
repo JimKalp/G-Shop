@@ -8,20 +8,26 @@ const AddProduct = ({ addProducts }) => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [file, setFile] = useState();
+  const [err, setErr] = useState(false);
 
   return (
     <div>
       <form
         onSubmit={async (event) => {
           event.preventDefault();
-          const res = await ProductService.add(
-            price,
-            description,
-            category,
-            file
-          );
-          addProducts(res);
-          history.push("/");
+          try {
+            const res = await ProductService.add(
+              price,
+              description,
+              category,
+              file
+            );
+            console.log(res);
+            addProducts(res);
+            history.push("/");
+          } catch (err) {
+            setErr(true);
+          }
         }}
       >
         <div>
@@ -65,6 +71,7 @@ const AddProduct = ({ addProducts }) => {
           <input type="submit" value="Add product" />
         </div>
       </form>
+      {err && <p className="alert alert-danger">Wrong Product Values</p>}
     </div>
   );
 };

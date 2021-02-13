@@ -35,35 +35,48 @@ router.route("/").get((req, res) => {
     .then((products) => res.json(products))
     .catch((err) => res.status(400).json("Error: " + err));
 });
-
+const { check, validationResult } = require("express-validator");
 router
   .route("/add")
   .post(
     upload.single("uploaded_file"),
     passport.authenticate("jwt", { session: false }),
     amw,
-    (req, res, next) => {
-      const description = req.body.description;
-      const price = Number(req.body.price);
-      const category = req.body.category;
-      const newProduct = new Product({
-        description,
-        price,
-        category,
-        img: {
-          url: host_URL + "/" + req.file.path,
-          contentType: "image/jpeg",
-        },
-      });
-
-      newProduct
-        .save()
-        .then(() => {
-          res.json(newProduct);
-        })
-        .catch((err) => {
-          res.status(400).json("wrong.attributes");
+    [
+      check("price").isNumeric().trim().escape(),
+      check("description").trim().escape(),
+      check("category").trim().escape(),
+    ],
+    (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      try {
+        const description = req.body.description;
+        const price = Number(req.body.price);
+        const category = req.body.category;
+        const newProduct = new Product({
+          description,
+          price,
+          category,
+          img: {
+            url: host_URL + "/" + req.file.path,
+            contentType: "image/jpeg",
+          },
         });
+
+        newProduct
+          .save()
+          .then(() => {
+            res.json(newProduct);
+          })
+          .catch((err) => {
+            res.status(400).json("wrong.attributes");
+          });
+      } catch (err) {
+        res.status(400).json({ error: "Missing required fields" });
+      }
     }
   );
 
@@ -83,23 +96,40 @@ router
 
 router
   .route("/update/:id")
-  .put(passport.authenticate("jwt", { session: false }), amw, (req, res) => {
-    Product.findById(req.params.id)
-      .then((product) => {
-        product.price = Number(req.body.price);
-        product.category = req.body.category;
-        product.description = req.body.description;
+  .put(
+    passport.authenticate("jwt", { session: false }),
+    amw,
+    [
+      check("price").isNumeric().trim().escape(),
+      check("description").trim().escape(),
+      check("category").trim().escape(),
+    ],
+    (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      Product.findById(req.params.id)
+        .then((product) => {
+          try {
+            product.price = Number(req.body.price);
+            product.category = req.body.category;
+            product.description = req.body.description;
 
-        if (req.body.file) {
-          product.img.url = req.body.file;
-        }
+            if (req.body.file) {
+              product.img.url = req.body.file;
+            }
+          } catch (err) {
+            res.status(400).json({ error: "Missing required fields" });
+          }
 
-        product
-          .save()
-          .then(() => res.json(product))
-          .catch((err) => res.status(400).json("Error: " + err));
-      })
-      .catch((err) => res.status(400).json("Error: " + err));
-  });
+          product
+            .save()
+            .then(() => res.json(product))
+            .catch((err) => res.status(400).json("Error: " + err));
+        })
+        .catch((err) => res.status(400).json("Error: " + err));
+    }
+  );
 
 module.exports = router;

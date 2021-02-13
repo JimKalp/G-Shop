@@ -10,6 +10,7 @@ const EditProduct = (props) => {
   const [category, setCategory] = useState("");
   const [file, setFile] = useState();
   const [saved, setSaved] = useState(false);
+  const [err, setErr] = useState(false);
   const [product, setProd] = useState();
   const { id } = useParams();
 
@@ -30,18 +31,24 @@ const EditProduct = (props) => {
       <form
         onSubmit={async (event) => {
           event.preventDefault();
-          const res = await ProductService.update({
-            _id: product._id,
-            price,
-            description,
-            category,
-            file,
-          });
-          let prods = props.context.products.slice();
-          let index = prods.findIndex((p) => p._id === product._id);
-          prods[index] = res.data;
-          props.context.setProducts(prods);
-          setSaved(true);
+          try {
+            const res = await ProductService.update({
+              _id: product._id,
+              price,
+              description,
+              category,
+              file,
+            });
+            let prods = props.context.products.slice();
+            let index = prods.findIndex((p) => p._id === product._id);
+            prods[index] = res.data;
+            props.context.setProducts(prods);
+            setSaved(true);
+            setErr(false);
+          } catch (err) {
+            setErr(true);
+            setSaved(false);
+          }
         }}
       >
         <div>
@@ -78,10 +85,11 @@ const EditProduct = (props) => {
           />
         </div>
         <div>
-          <input type="submit" value="Add product" />
+          <input type="submit" value="Save product" />
         </div>
       </form>
       {saved && <p className="alert alert-success">Product Saved</p>}
+      {err && <p className="alert alert-danger">Wrong Product Values</p>}
     </div>
   );
 };

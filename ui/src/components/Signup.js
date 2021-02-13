@@ -64,9 +64,7 @@ const Signup = (props) => {
         <div>
           <input type="submit" value="Sign up" />
         </div>
-        {error && (
-          <p className="alert alert-danger">Username or email exists</p>
-        )}
+        {error && <p className="alert alert-danger">{error}</p>}
       </form>
     </div>
   );

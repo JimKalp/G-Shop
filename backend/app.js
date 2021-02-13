@@ -47,6 +47,9 @@ passport.use(
     },
     (username, password, done) => {
       User.findOne({ username: username }, function (err, user) {
+        if (err || !user) {
+          return done(null, false);
+        }
         if (username === user.username && password === user.password) {
           return done(null, user);
         } else {

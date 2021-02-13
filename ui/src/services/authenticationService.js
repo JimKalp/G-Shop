@@ -30,9 +30,18 @@ class AuthenticationService {
         email,
         password,
       });
+      // .catch((err) => console.log(err.response));
       return res;
     } catch (err) {
-      return { error: "Username or email exists" };
+      console.log(err.response);
+      let error = err.response.data;
+      let msg = "";
+      if (error.sanitizationError) {
+        error.errors.map((err) => {
+          return (msg += `${err.msg} for ${err.param}`);
+        });
+      } else msg = error;
+      return { error: msg };
     }
   };
 

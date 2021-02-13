@@ -18,7 +18,7 @@ class ProductService {
       const res = await axios.post("/products/add", formData, config);
       return res.data;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   };
 
@@ -44,7 +44,7 @@ class ProductService {
       const res = await axios.put(`/products/update/${product._id}`, product);
       return res;
     } catch (err) {
-      return { error: "Cannot update" };
+      throw err;
     }
   };
 }
