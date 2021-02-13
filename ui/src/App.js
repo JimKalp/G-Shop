@@ -23,6 +23,33 @@ function usePersistedState(key, defaultValue) {
   return [state, setState];
 }
 
+const addToCart = cartItem => {
+  let cart = this.state.cart;
+  if (cart[cartItem.id]) {
+    cart[cartItem.id].amount += cartItem.amount;
+  } else {
+    cart[cartItem.id] = cartItem;
+  }
+  if (cart[cartItem.id].amount > cart[cartItem.id].product.stock) {
+    cart[cartItem.id].amount = cart[cartItem.id].product.stock;
+  }
+  localStorage.setItem("cart", JSON.stringify(cart));
+  this.setState({ cart });
+};
+
+const removeFromCart = cartItemId => {
+  let cart = this.state.cart;
+  delete cart[cartItemId];
+  localStorage.setItem("cart", JSON.stringify(cart));
+  this.setState({ cart });
+};
+
+const clearCart = () => {
+  let cart = {};
+  localStorage.removeItem("cart");
+  this.setState({ cart });
+};
+
 function App() {
   const [username, setUsername] = usePersistedState("username", "Guest"); // useState("Guest");
   const [role, setRole] = usePersistedState("role", "guest");
@@ -52,9 +79,9 @@ function App() {
     login,
     logout,
     cart: {},
-    removeFromCart: this.removeFromCart,
-    addToCart: this.addToCart,
-    clearCart: this.clearCart,
+    removeFromCart,
+    addToCart,
+    clearCart
   };
   const fetchProducts = async () => {
     const res = await axios.get("/products");
@@ -72,34 +99,6 @@ function App() {
     cart = cart? JSON.parse(cart) : {};
     
   }, [setProducts], [setCart]);
-
-  const addToCart = cartItem => {
-    let cart = this.state.cart;
-    if (cart[cartItem.id]) {
-      cart[cartItem.id].amount += cartItem.amount;
-    } else {
-      cart[cartItem.id] = cartItem;
-    }
-    if (cart[cartItem.id].amount > cart[cartItem.id].product.stock) {
-      cart[cartItem.id].amount = cart[cartItem.id].product.stock;
-    }
-    localStorage.setItem("cart", JSON.stringify(cart));
-    this.setState({ cart });
-  };
-
-  const removeFromCart = cartItemId => {
-    let cart = this.state.cart;
-    delete cart[cartItemId];
-    localStorage.setItem("cart", JSON.stringify(cart));
-    this.setState({ cart });
-  };
-
-  const clearCart = () => {
-    let cart = {};
-    localStorage.removeItem("cart");
-    this.setState({ cart });
-  };
-
 
   return (
     <Router>
