@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AuthenticationService from "../services/authenticationService";
 import contextWrapper from "../context/contextWrapper";
 import { useHistory } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Login = (props) => {
   let history = useHistory();
@@ -10,6 +11,8 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   return (
     <div>
+      <h4 className="title">Login</h4>
+      <br/>
       <form
         onSubmit={async (event) => {
           event.preventDefault();
@@ -25,29 +28,31 @@ const Login = (props) => {
           }
         }}
       >
-        <div>
+        <div className="form-group">
           <label>Username:</label>
           <input
             type="text"
             name="username"
+            class="form-control"
             onChange={(event) => {
               setUsername(event.target.value);
             }}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Password:</label>
           <input
             type="password"
             name="password"
+            class="form-control"
             onChange={(event) => {
               setPassword(event.target.value);
             }}
           />
         </div>
-        <div>
-          <input type="submit" value="Log In" />
-        </div>
+
+        <button type="submit" class="btn btn-success">Submit</button>
+        
         {error && (
           <p className="alert alert-danger" role="alert">
             Wrong username or password
