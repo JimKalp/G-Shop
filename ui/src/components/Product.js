@@ -1,6 +1,9 @@
 import React from "react";
+import contextWrapper from "../context/contextWrapper";
 
-const Product = ({ product }) => {
+const Product = (props) => {
+  const product = props.product;
+  const addToCart = props.context.addToCart;
   return (
     <div className="card-body card-container" style={{ display: "grid" }}>
       <img
@@ -12,10 +15,12 @@ const Product = ({ product }) => {
       <p>{product.price}</p>
       <p>{product.category}</p>
       <div>
-        <button className="btn btn-primary">Add to Cart</button>
+        <button onClick={() => addToCart(product)} className="btn btn-primary">
+          Add to Cart
+        </button>
       </div>
     </div>
   );
 };
 
-export default Product;
+export default contextWrapper(Product);

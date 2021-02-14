@@ -21,7 +21,7 @@ const Login = (props) => {
           if (res.error) {
             setError(res.error);
           } else {
-            history.push("/");
+            history.length > 2 ? history.goBack() : history.push("/");
           }
         }}
       >

@@ -10,7 +10,7 @@ import Signup from "./components/Signup";
 import AddProduct from "./components/AddProduct";
 import { UserContext } from "./context/user_context";
 import Footer from "./components/Footer";
-import Cart from './components/Cart';
+import Cart from "./components/Cart";
 axios.defaults.baseURL = "http://localhost:8080";
 
 function usePersistedState(key, defaultValue) {
@@ -23,54 +23,60 @@ function usePersistedState(key, defaultValue) {
   return [state, setState];
 }
 
-const addToCart = cartItem => {
-  let cart = this.state.cart;
-  if (cart[cartItem.id]) {
-    cart[cartItem.id].amount += cartItem.amount;
-  } else {
-    cart[cartItem.id] = cartItem;
-  }
-  if (cart[cartItem.id].amount > cart[cartItem.id].product.stock) {
-    cart[cartItem.id].amount = cart[cartItem.id].product.stock;
-  }
-  localStorage.setItem("cart", JSON.stringify(cart));
-  this.setState({ cart });
-};
-
-const removeFromCart = cartItemId => {
-  let cart = this.state.cart;
-  delete cart[cartItemId];
-  localStorage.setItem("cart", JSON.stringify(cart));
-  this.setState({ cart });
-};
-
-const clearCart = () => {
-  let cart = {};
-  localStorage.removeItem("cart");
-  this.setState({ cart });
-};
-
 function App() {
   const [username, setUsername] = usePersistedState("username", "Guest"); // useState("Guest");
   const [role, setRole] = usePersistedState("role", "guest");
   const [products, setProducts] = usePersistedState("products", []);
-  const [cart, setCart] = usePersistedState("cart", {});
+  const [cart, setCart] = useState();
   const [isAuthenticated, setIsAuthenticated] = usePersistedState(
     "auth",
     false
   );
+
   const login = (name, _role = "user") => {
     setUsername(name);
     setIsAuthenticated(true);
     setRole(_role);
   };
+
   const addProducts = (product) => {
     setProducts([...products, product]);
   };
+
   const logout = () => {
     setUsername("Guest");
     setRole("guest");
     setIsAuthenticated(false);
+  };
+
+  const addToCart = (cartItem) => {
+    let _cart = cart;
+    _cart[cartItem._id] = cartItem;
+
+    localStorage.setItem("cart", JSON.stringify(_cart));
+    setCart(_cart);
+  };
+
+  const removeFromCart = (cartItemId) => {
+    let _cart = cart;
+    delete _cart[cartItemId];
+    localStorage.setItem("cart", JSON.stringify(_cart));
+    setCart(_cart);
+  };
+
+  const clearCart = () => {
+    let _cart = {};
+    localStorage.removeItem("cart");
+    setCart(_cart);
+  };
+
+  const checkout = (history) => {
+    if (!isAuthenticated) {
+      history.push("/login");
+      return;
+    }
+    clearCart();
+    alert("Your order has been placed. Thank you!");
   };
   const state = {
     username,
@@ -78,11 +84,13 @@ function App() {
     isAuthenticated,
     login,
     logout,
-    cart: {},
+    cart,
     removeFromCart,
     addToCart,
-    clearCart
+    clearCart,
+    checkout,
   };
+
   const fetchProducts = async () => {
     const res = await axios.get("/products");
     return res.data;
@@ -92,13 +100,12 @@ function App() {
       const prods = await fetchProducts();
       setProducts(prods);
     };
-    
     getProducts();
 
-    let cart = localStorage.getItem("cart");
-    cart = cart? JSON.parse(cart) : {};
-    
-  }, [setProducts], [setCart]);
+    let _cart = localStorage.getItem("cart");
+    _cart = _cart ? JSON.parse(_cart) : {};
+    setCart(_cart);
+  }, [setProducts, setCart]);
 
   return (
     <Router>
