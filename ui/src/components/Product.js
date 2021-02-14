@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Product = (props) => {
   const product = props.product;
-
+  const addToCart = props.context.addToCart;
   return (
     <div className="card-body card-container" style={{ display: "grid" }}>
       <img
@@ -17,7 +17,13 @@ const Product = (props) => {
       <p>{product.price}</p>
       <p>{product.category}</p>
       <div>
-        <button className="btn btn-primary">Add to Cart</button>
+        <button
+          className="btn btn-primary"
+          onClick={() => addToCart(product)}
+          className="btn btn-primary"
+        >
+          Add to Cart
+        </button>
         {props.context.role === "admin" && (
           <>
             <Link to={`/edit/${product._id}`}>

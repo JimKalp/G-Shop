@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import contextWrapper from "../context/contextWrapper";
 
-const CartItem = props => {
+const CartItem = (props) => {
+  const [st, setSt] = useState(false);
   const { cartItem, cartKey } = props;
-
-  const { product, amount } = cartItem;
   return (
     <div className=" column is-half">
       <div className="box">
@@ -11,27 +11,31 @@ const CartItem = props => {
           <div className="media-left">
             <figure className="image is-64x64">
               <img
+                src={cartItem.img.url}
+                alt="prod"
+                style={{ width: "50px", height: "50px" }}
               />
             </figure>
           </div>
           <div className="media-content">
             <b style={{ textTransform: "capitalize" }}>
-              {product.name}{" "}
-              <span className="tag is-primary">${product.price}</span>
+              {cartItem.description}{" "}
+              <span className="tag is-primary">${cartItem.price}</span>
             </b>
-            <div>{product.shortDesc}</div>
-            <small>{`${amount} in cart`}</small>
           </div>
-          <div
-            className="media-right"
-            onClick={() => props.removeFromCart(cartKey)}
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              props.removeFromCart(cartKey);
+              setSt(!st);
+            }}
           >
-            <span className="delete is-large"></span>
-          </div>
+            X
+          </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default CartItem;
+export default contextWrapper(CartItem);

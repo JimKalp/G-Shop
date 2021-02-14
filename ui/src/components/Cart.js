@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import contextWrapper from "../context/contextWrapper";
 import CartItem from "./CartItem";
+import { useHistory } from "react-router-dom";
 
-const Cart = props => {
-  const { cart } = props.context;
-  const cartKeys = Object.keys(cart || {});
+const Cart = (props) => {
+  const [st, setSt] = useState(false);
+  const cart = props.context.cart;
+  const rem = (key) => {
+    props.context.removeFromCart(key);
+  };
+  let history = useHistory();
+
   return (
     <>
       <div className="hero is-primary">
@@ -14,28 +20,39 @@ const Cart = props => {
       </div>
       <br />
       <div className="container">
-        {cartKeys.length ? (
+        {cart ? (
           <div className="column columns is-multiline">
-            {cartKeys.map(key => (
-              <CartItem
-                cartKey={key}
-                key={key}
-                cartItem={cart[key]}
-                removeFromCart={props.context.removeFromCart}
-              />
-            ))}
+            {Object.keys(cart).map((key) => {
+              return (
+                <CartItem
+                  cartKey={key}
+                  key={key}
+                  cartItem={cart[key]}
+                  removeFromCart={(key) => {
+                    rem(key);
+                    setSt(!st);
+                  }}
+                />
+              );
+            })}
             <div className="column is-12 is-clearfix">
               <br />
               <div className="is-pulled-right">
                 <button
-                  onClick={props.context.clearCart}
+                  onClick={() => {
+                    props.context.clearCart();
+                    setSt(!st);
+                  }}
                   className="button is-warning "
                 >
                   Clear cart
                 </button>{" "}
                 <button
                   className="button is-success"
-                  onClick={props.context.checkout}
+                  onClick={() => {
+                    props.context.checkout(history);
+                    setSt(!st);
+                  }}
                 >
                   Checkout
                 </button>

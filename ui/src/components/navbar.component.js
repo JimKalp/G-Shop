@@ -70,7 +70,7 @@ class Navbar extends Component {
                 </Link>
               </li>
               <li className="navbar-item">
-                <Link to="/Cart" className="nav-link">
+                <Link to="/MyCart" className="nav-link">
                   My Cart
                 </Link>
               </li>
