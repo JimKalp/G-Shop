@@ -1,5 +1,6 @@
 const router = require("express").Router();
 let User = require("../models/user.model");
+const bcrypt = require("bcrypt");
 const passport = require("passport");
 const { check, validationResult } = require("express-validator");
 
@@ -43,7 +44,7 @@ router
       }
       const username = req.body.username;
       const email = req.body.email;
-      const password = req.body.password;
+      const password = bcrypt.hashSync(req.body.password, 10);
       const newUser = new User({ username, email, password, role: "user" });
 
       newUser

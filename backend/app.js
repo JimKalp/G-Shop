@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");
+const bcrypt = require("bcrypt");
 const User = require("./models/user.model");
 
 require("dotenv").config();
@@ -50,11 +51,13 @@ passport.use(
         if (err || !user) {
           return done(null, false);
         }
-        if (username === user.username && password === user.password) {
-          return done(null, user);
-        } else {
-          return done(null, false);
-        }
+        bcrypt.compare(password, user.password, (err, res) => {
+          if (res) {
+            return done(null, user);
+          } else {
+            return done(null, false);
+          }
+        });
       });
     }
   )
