@@ -17,11 +17,7 @@ const Product = (props) => {
       <p>{product.price}</p>
       <p>{product.category}</p>
       <div>
-        <button
-          className="btn btn-primary"
-          onClick={() => addToCart(product)}
-          className="btn btn-primary"
-        >
+        <button className="btn btn-primary" onClick={() => addToCart(product)}>
           Add to Cart
         </button>
         {props.context.role === "admin" && (

@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import ProductService from "../services/productService";
-import { useHistory } from "react-router-dom";
+import contextWrapper from "../context/contextWrapper";
+import { Redirect, useHistory } from "react-router-dom";
 
-const AddProduct = ({ addProducts }) => {
+const AddProduct = ({ addProducts, context }) => {
   let history = useHistory();
+  const isAuthenticated = context.isAuthenticated;
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [file, setFile] = useState();
   const [err, setErr] = useState(false);
 
-  return (
+  return isAuthenticated ? (
     <div>
       <form
         onSubmit={async (event) => {
@@ -73,7 +75,9 @@ const AddProduct = ({ addProducts }) => {
       </form>
       {err && <p className="alert alert-danger">Wrong Product Values</p>}
     </div>
+  ) : (
+    <Redirect to="/login" />
   );
 };
 
-export default AddProduct;
+export default contextWrapper(AddProduct);

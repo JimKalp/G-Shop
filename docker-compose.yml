@@ -5,8 +5,8 @@ services:
     image: gshop/g_shop_backend:latest
     restart: on-failure
     build:
-      - context: ./backend/
-      - dockerfile: Dockerfile.dev
+      context: ./backend/
+      dockerfile: Dockerfile.dev
     volumes:
       - ./backend:/usr/src/app
     ports:
@@ -19,8 +19,8 @@ services:
     image: gshop/g_shop_frontend:latest
     restart: on-failure
     build:
-      - context: ./ui/
-      - dockerfile: Dockerfile.dev
+      context: ./ui/
+      dockerfile: Dockerfile.dev
     volumes:
       - ./ui:/usr/src/ui
       - /app/node_modules

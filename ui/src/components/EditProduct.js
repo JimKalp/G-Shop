@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProductService from "../services/productService";
 import contextWrapper from "../context/contextWrapper";
-import { useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import axios from "axios";
 
 const EditProduct = (props) => {
@@ -26,7 +26,7 @@ const EditProduct = (props) => {
     fetchData();
   }, [setProd, setPrice, setDescription, setCategory, id]);
 
-  return (
+  return props.isAuthenticated ? (
     <div>
       <form
         onSubmit={async (event) => {
@@ -91,6 +91,8 @@ const EditProduct = (props) => {
       {saved && <p className="alert alert-success">Product Saved</p>}
       {err && <p className="alert alert-danger">Wrong Product Values</p>}
     </div>
+  ) : (
+    <Redirect to="/login" />
   );
 };
 

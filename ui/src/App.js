@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./components/navbar.component";
-import CreateUser from "./components/create-user.component";
+import UserPage from "./components/UserPage";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import AddProduct from "./components/AddProduct";
@@ -116,7 +116,7 @@ function App() {
         <Navbar />
         <div className="container">
           <br />
-          <Route path="/user" component={CreateUser} />
+          <Route path="/user" component={UserPage} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/MyCart" component={Cart} />

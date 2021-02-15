@@ -76,18 +76,13 @@ class Navbar extends Component {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul className="navbar-nav mr-auto">
               <li className="navbar-item">
-                <Link to="/products" className="nav-link">
+                <Link to="/" className="nav-link">
                   Products
                 </Link>
               </li>
               <li className="navbar-item">
                 <Link to="/MyCart" className="nav-link">
                   My Cart
-                </Link>
-              </li>
-              <li className="navbar-item">
-                <Link to="/user" className="nav-link">
-                  Create User
                 </Link>
               </li>
               {role === "admin" && (
