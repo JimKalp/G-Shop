@@ -50,9 +50,9 @@ const Login = (props) => {
             }}
           />
         </div>
-
-        <button type="submit" class="btn btn-success">Submit</button>
-        
+        <div>
+          <input type="submit" value="Log In" />
+        </div>
         {error && (
           <p className="alert alert-danger" role="alert">
             Wrong username or password

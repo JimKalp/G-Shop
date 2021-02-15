@@ -32,7 +32,7 @@ const AddProduct = ({ addProducts, context }) => {
           }
         }}
       >
-        <div>
+        <div className="form-group">
           <label>Price:</label>
           <input
             type="text"
@@ -42,21 +42,23 @@ const AddProduct = ({ addProducts, context }) => {
             }}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Description:</label>
           <input
             type="text"
             name="description"
+            
             onChange={(event) => {
               setDescription(event.target.value);
             }}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Category:</label>
           <input
             type="text"
             name="category"
+            class="form-control"
             onChange={(event) => {
               setCategory(event.target.value);
             }}

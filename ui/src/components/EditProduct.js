@@ -51,34 +51,37 @@ const EditProduct = (props) => {
           }
         }}
       >
-        <div>
+        <div className="form-group">
           <label>Price:</label>
           <input
             type="text"
             value={price}
             name="price"
+            class="form-control"
             onChange={(event) => {
               setPrice(event.target.value);
             }}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Description:</label>
           <input
             type="text"
             value={description}
             name="description"
+            class="form-control"
             onChange={(event) => {
               setDescription(event.target.value);
             }}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Category:</label>
           <input
             type="text"
             value={category}
             name="category"
+            class="form-control"
             onChange={(event) => {
               setCategory(event.target.value);
             }}
