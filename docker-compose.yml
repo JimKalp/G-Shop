@@ -1,14 +1,29 @@
 version: "3.9"
 services:
   app:
-    build: ./backend/
+    container_name: g_shop_backend
+    image: gshop/g_shop_backend:latest
+    restart: on-failure
+    build:
+      - context: ./backend/
+      - dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend:/usr/src/app
     ports:
       - "8080:8080"
     networks:
       - backend
 
   ui:
-    build: ./ui/
+    container_name: g_shop_frontend
+    image: gshop/g_shop_frontend:latest
+    restart: on-failure
+    build:
+      - context: ./ui/
+      - dockerfile: Dockerfile.dev
+    volumes:
+      - ./ui:/usr/src/ui
+      - /app/node_modules
     ports:
       - "3000:3000"
       - "80:80"
