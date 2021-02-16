@@ -46,12 +46,12 @@ const Cart = (props) => {
                       props.context.clearCart();
                       setSt(!st);
                     }}
-                    className="button is-warning "
+                    className="btn btn-danger"
                   >
                     Clear cart
                   </button>{" "}
                   <button
-                    className="button is-success"
+                    className="btn btn-primary"
                     onClick={() => {
                       props.context.checkout(history);
                       setSt(!st);
