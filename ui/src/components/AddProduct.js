@@ -32,34 +32,34 @@ const AddProduct = ({ addProducts, context }) => {
           }
         }}
       >
-        <div className="form-group">
+        <div className="form-inline">
           <label>Price:</label>
           <input
             type="text"
             name="price"
-            class="form-control"
+            className="form-control mb-2 mr-sm-2"
             onChange={(event) => {
               setPrice(event.target.value);
             }}
           />
         </div>
-        <div className="form-group">
+        <div className="form-inline">
           <label>Description:</label>
           <input
             type="text"
             name="description"
-            class="form-control"
+            className="form-control mb-2 mr-sm-2"
             onChange={(event) => {
               setDescription(event.target.value);
             }}
           />
         </div>
-        <div className="form-group">
+        <div className="form-inline">
           <label>Category:</label>
           <input
             type="text"
             name="category"
-            class="form-control"
+            className="form-control mb-2 mr-sm-2"
             onChange={(event) => {
               setCategory(event.target.value);
             }}
@@ -73,7 +73,7 @@ const AddProduct = ({ addProducts, context }) => {
           />
         </div>
         <div>
-          <input class="btn btn-success" type="submit" value="Add product" />
+          <input className="btn btn-success mb-2" type="submit" value="Add product" />
         </div>
       </form>
       {err && <p className="alert alert-danger">Wrong Product Values</p>}

@@ -51,37 +51,37 @@ const EditProduct = (props) => {
           }
         }}
       >
-        <div className="form-group">
+        <div className="form-inline">
           <label>Price:</label>
           <input
             type="text"
             value={price}
             name="price"
-            class="form-control"
+            className="form-control mb-2 mr-sm-2"
             onChange={(event) => {
               setPrice(event.target.value);
             }}
           />
         </div>
-        <div className="form-group">
+        <div className="form-inline">
           <label>Description:</label>
           <input
             type="text"
             value={description}
             name="description"
-            class="form-control"
+            className="form-control mb-2 mr-sm-2"
             onChange={(event) => {
               setDescription(event.target.value);
             }}
           />
         </div>
-        <div className="form-group">
+        <div className="form-inline">
           <label>Category:</label>
           <input
             type="text"
             value={category}
             name="category"
-            class="form-control"
+            className="form-control mb-2 mr-sm-2"
             onChange={(event) => {
               setCategory(event.target.value);
             }}
@@ -95,7 +95,11 @@ const EditProduct = (props) => {
           />
         </div>
         <div>
-          <input class="btn btn-success" type="submit" value="Save product" />
+          <input
+            class="btn btn-success mb-2"
+            type="submit"
+            value="Save product"
+          />
         </div>
       </form>
       {saved && <p className="alert alert-success">Product Saved</p>}

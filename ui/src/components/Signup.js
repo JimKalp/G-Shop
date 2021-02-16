@@ -38,7 +38,7 @@ const Signup = (props) => {
           <input
             type="text"
             name="username"
-            class="form-control"
+            className="form-control"
             onChange={(event) => {
               setUsername(event.target.value);
             }}
@@ -49,7 +49,7 @@ const Signup = (props) => {
           <input
             type="text"
             name="email"
-            class="form-control"
+            className="form-control"
             onChange={(event) => {
               setEmail(event.target.value);
             }}
@@ -60,7 +60,7 @@ const Signup = (props) => {
           <input
             type="password"
             name="password"
-            class="form-control"
+            className="form-control"
             onChange={(event) => {
               setPassword(event.target.value);
             }}
@@ -68,7 +68,7 @@ const Signup = (props) => {
         </div>
         <br/>
         <div>
-          <input class="btn btn-success" type="submit" value="Sign up" />
+          <input className="btn btn-success" type="submit" value="Sign up" />
         </div>
 
         {error && <p className="alert alert-danger">{error}</p>}
