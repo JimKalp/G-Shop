@@ -48,6 +48,7 @@ function App() {
     setUsername("Guest");
     setRole("guest");
     setIsAuthenticated(false);
+    clearCart();
   };
 
   const addToCart = (cartItem) => {
