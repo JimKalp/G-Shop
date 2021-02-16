@@ -10,7 +10,7 @@ const Signup = (props) => {
   const [email, setEmail] = useState("");
   const history = useHistory();
   return (
-    <div>
+    <div className="form-container">
       <h4 className="title">Create your account</h4>
       <br/>
       <form
