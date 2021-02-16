@@ -11,6 +11,10 @@ services:
       - ./backend:/usr/src/app
     ports:
       - "8080:8080"
+    external_links:
+      - mongo
+    depends_on:
+      - mongo
     networks:
       - backend
 
@@ -30,7 +34,16 @@ services:
     networks:
       - frontend
       - backend
-
+    depends_on:
+      - app
+  mongo:
+    image: mongo
+    volumes:
+      - ./mongodb/db:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
 networks:
   frontend:
   backend:

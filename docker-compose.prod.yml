@@ -11,6 +11,10 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./backend/uploads:/usr/src/app/uploads
+    external_links:
+      - mongo
+    depends_on:
+      - mongo
 
   ui:
     container_name: g_shop_frontend
@@ -19,3 +23,9 @@ services:
     build:
       context: ./ui/
       dockerfile: Dockerfile
+  mongo:
+    image: mongo
+    volumes:
+      - ./mongodb/db:/data/db
+    ports:
+      - "27017:27017"
