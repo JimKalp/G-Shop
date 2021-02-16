@@ -3,11 +3,14 @@ import Product from "./Product";
 
 const ProductList = ({ products, location }) => {
   const [_products, setProducts] = useState([]);
-  const _filter = location?.state?.filter;
+  const _filter = location?.state?.filter?.toLowerCase();
   let p = useMemo(() => {
     if (_filter) {
       return products.filter((product) =>
-        product.description.search(_filter) >= 0 ? true : false
+        product.description.toLowerCase().search(_filter) >= 0 ||
+        product.category.toLowerCase().search(_filter) >= 0
+          ? true
+          : false
       );
     } else {
       return products;
