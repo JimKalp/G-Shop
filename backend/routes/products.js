@@ -97,6 +97,7 @@ router
 router
   .route("/update/:id")
   .put(
+    upload.any("uploaded_file"),
     passport.authenticate("jwt", { session: false }),
     amw,
     [
@@ -116,8 +117,8 @@ router
             product.category = req.body.category;
             product.description = req.body.description;
 
-            if (req.body.file) {
-              product.img.url = req.body.file;
+            if (req.files[0]) {
+              product.img.url = host_URL + "/" + req.files[0].path;
             }
           } catch (err) {
             res.status(400).json({ error: "Missing required fields" });

@@ -41,7 +41,21 @@ class ProductService {
 
   update = async (product) => {
     try {
-      const res = await axios.put(`/products/update/${product._id}`, product);
+      const formData = new FormData();
+      formData.append("uploaded_file", product.file);
+      formData.append("price", product.price);
+      formData.append("description", product.description);
+      formData.append("category", product.category);
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      };
+      const res = await axios.put(
+        `/products/update/${product._id}`,
+        formData,
+        config
+      );
       return res;
     } catch (err) {
       throw err;

@@ -26,7 +26,7 @@ const EditProduct = (props) => {
     fetchData();
   }, [setProd, setPrice, setDescription, setCategory, id]);
 
-  return props.isAuthenticated ? (
+  return props.context.isAuthenticated ? (
     <div>
       <form
         onSubmit={async (event) => {
@@ -82,6 +82,13 @@ const EditProduct = (props) => {
             onChange={(event) => {
               setCategory(event.target.value);
             }}
+          />
+        </div>
+        <div>
+          <input
+            type="file"
+            name="uploaded_file"
+            onChange={(event) => setFile(event.target.files[0])}
           />
         </div>
         <div>
