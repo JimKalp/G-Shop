@@ -95,7 +95,7 @@ const EditProduct = (props) => {
           />
         </div>
         <div>
-          <input type="submit" value="Save product" />
+          <input class="btn btn-success" type="submit" value="Save product" />
         </div>
       </form>
       {saved && <p className="alert alert-success">Product Saved</p>}

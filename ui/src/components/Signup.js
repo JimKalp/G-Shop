@@ -68,7 +68,7 @@ const Signup = (props) => {
         </div>
         <br/>
         <div>
-          <input type="submit" value="Sign up" />
+          <input class="btn btn-success" type="submit" value="Sign up" />
         </div>
 
         {error && <p className="alert alert-danger">{error}</p>}

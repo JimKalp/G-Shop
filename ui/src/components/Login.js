@@ -51,7 +51,7 @@ const Login = (props) => {
           />
         </div>
         <div>
-          <input type="submit" value="Log In" />
+          <input class="btn btn-success" type="submit" value="Log In" />
         </div>
         {error && (
           <p className="alert alert-danger" role="alert">

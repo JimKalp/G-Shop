@@ -37,6 +37,7 @@ const AddProduct = ({ addProducts, context }) => {
           <input
             type="text"
             name="price"
+            class="form-control"
             onChange={(event) => {
               setPrice(event.target.value);
             }}
@@ -47,7 +48,7 @@ const AddProduct = ({ addProducts, context }) => {
           <input
             type="text"
             name="description"
-            
+            class="form-control"
             onChange={(event) => {
               setDescription(event.target.value);
             }}
@@ -72,7 +73,7 @@ const AddProduct = ({ addProducts, context }) => {
           />
         </div>
         <div>
-          <input type="submit" value="Add product" />
+          <input class="btn btn-success" type="submit" value="Add product" />
         </div>
       </form>
       {err && <p className="alert alert-danger">Wrong Product Values</p>}
