@@ -1,20 +1,21 @@
 version: "3.9"
-app:
-  container_name: g_shop_backend
-  image: gshop/g_shop_backend:latest
-  restart: always
-  environment:
-    NODE_ENV: production
-  build:
-    context: ./backend/
-    dockerfile: Dockerfile
-  volumes:
-    - ./backend/uploads:/usr/src/app/uploads
+services:
+  app:
+    container_name: g_shop_backend
+    image: gshop/g_shop_backend:latest
+    restart: always
+    environment:
+      NODE_ENV: production
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend/uploads:/usr/src/app/uploads
 
-ui:
-  container_name: g_shop_frontend
-  image: gshop/g_shop_frontend:latest
-  restart: always
-  build:
-    context: ./ui/
-    dockerfile: Dockerfile
+  ui:
+    container_name: g_shop_frontend
+    image: gshop/g_shop_frontend:latest
+    restart: always
+    build:
+      context: ./ui/
+      dockerfile: Dockerfile
